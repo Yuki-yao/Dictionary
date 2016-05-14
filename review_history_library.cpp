@@ -1,8 +1,12 @@
 #include"review_history_library.h"
+#include"word_library.h"
 #include<vector>
 #include<string>
 #include<ctime>
+#include<set>
 using namespace std;
+
+extern word_library word_lib;
 
 void review_history_library::insert_review_history(review_history new_history)
 {
@@ -17,11 +21,14 @@ void review_history_library::insert_review_history(review_history new_history)
                 lists.push_back(new_list);
                 lists[lists.size()].insert_review_list(new_history);
         }
+        if(new_history.get_remembered())
+                word_lib.newwords.erase(new_history.get_word());
 }
 
 void review_history_library::clear_review_history()
 {
         lists.clear();
+        //...
 }
 
 const int& review_list::get_year()
@@ -41,4 +48,12 @@ void review_list::insert_review_list(review_history new_history)
 
 review_list::review_list(int _year, int _yday): year(_year), yday(yday){}
 
+const string& review_history::get_word()
+{
+        return word;
+}
 
+bool review_history::get_remembered()
+{
+        return remembered;
+}

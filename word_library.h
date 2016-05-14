@@ -2,6 +2,8 @@
 #define WORD_LIBRARY_H_INCLUDED
 #include<string>
 #include<vector>
+#include<map>
+#include<set>
 using namespace std;
 
 class feature
@@ -32,7 +34,9 @@ public:
         void insert_word_library(word new_word);
 private:
         vector<word> words;
+        map<string, word*> wordmap;
+        set<string> newwords;
+friend class review_history_library;
 };
-
 
 #endif // WORD_LIBRARY_H_INCLUDED

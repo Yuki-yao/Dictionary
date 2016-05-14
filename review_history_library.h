@@ -8,7 +8,10 @@ using namespace std;
 class review_history
 {
         string word;
-        int grade;//0: not remembered; 1: vague; 2: remembered
+        bool remembered;//false: not remembered; true: already remembered;
+public:
+        const string& get_word();
+        bool get_remembered();
 };
 
 class review_list
