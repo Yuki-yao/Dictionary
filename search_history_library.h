@@ -17,8 +17,8 @@ public:
 class search_history_library
 {
 public:
-        void input_search_history(string history);
-        vector<search_history> get_latest_history(string substring, int n);//return recent n records that include substring;
+        void input_search_history(string history);//only push_back
+        vector<search_history> get_latest_history(string substring, int n);//return recent n records that include substring in a reverse-chronological format
         void clear_search_history();
 private:
         vector<search_history> search_histories;
