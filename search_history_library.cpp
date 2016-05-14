@@ -26,6 +26,11 @@ vector<search_history> search_history_library::get_latest_history(string substri
         return feedbacks;
 }
 
+void search_history_library::clear_search_history()
+{
+        search_histories.clear();
+}
+
 search_history::search_history(string _word): word(_word)
 {
         time(&searchtime);
