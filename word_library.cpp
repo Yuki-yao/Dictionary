@@ -28,6 +28,8 @@ void word_library::insert_word_library(word new_word)
         }
 }
 
+word::word(string _word_name):word_name(_word_name){}
+
 void word::insert_features(feature new_feature)
 {
         features.push_back(new_feature);

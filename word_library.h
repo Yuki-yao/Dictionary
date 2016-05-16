@@ -20,6 +20,7 @@ public:
 class word
 {
 public:
+        word(string _word_name);
         void insert_features(feature new_feature);
         void insert_features(word new_word);
         const string& get_word_name();
