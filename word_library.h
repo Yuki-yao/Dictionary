@@ -32,7 +32,7 @@ private:
 class word_library
 {
 public:
-        void insert_word_library(word new_word);
+        void insert_word(word new_word);
 private:
         vector<word> words;
         map<string, word*> wordmap;

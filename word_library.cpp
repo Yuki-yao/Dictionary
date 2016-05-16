@@ -7,7 +7,7 @@ using namespace std;
 
 word_library word_lib;
 
-void word_library::insert_word_library(word new_word)
+void word_library::insert_word(word new_word)
 {
         int position = -1;
         for(int i = 0; i < words.size(); i ++)
