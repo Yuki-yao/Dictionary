@@ -12,8 +12,8 @@ class feature
         string meaning;
         vector<string> examples;
         int level;
-        int frequency;
 public:
+        feature(string _pos, string _meaning);
         void insert_examples(string example);
 };
 
@@ -22,8 +22,9 @@ class word
 public:
         word(string _word_name);
         void insert_features(feature new_feature);
-        void insert_features(word new_word);
         const string& get_word_name();
+        const vector<feature>& get_features();
+        const feature& get_feature(int i);//get the i-th feature in the features
 private:
         string word_name;
         vector<feature> features;

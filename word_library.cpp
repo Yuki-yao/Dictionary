@@ -19,7 +19,7 @@ void word_library::insert_word(word new_word)
                 }
         }
         if(position >= 0)
-                words[position].insert_features(new_word);
+                words[position].insert_features(new_word.get_feature(0));
         else
         {
                 words.push_back(new_word);
@@ -35,15 +35,22 @@ void word::insert_features(feature new_feature)
         features.push_back(new_feature);
 }
 
-void word::insert_features(word new_word)
-{
-        features.push_back(new_word.features[0]);
-}
-
 const string& word::get_word_name()
 {
         return word_name;
 }
+
+const vector<feature>& word::get_features()
+{
+        return features;
+}
+
+const feature& word::get_feature(int i)
+{
+        return features[i];
+}
+
+feature::feature(string _pos, string _meaning): pos(_pos), meaning(_meaning){}
 
 void feature::insert_examples(string example)
 {

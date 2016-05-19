@@ -12,6 +12,7 @@ class review_history
 public:
         const string& get_word();
         bool get_remembered();
+        review_history(string _word, bool _remembered);
 };
 
 class review_list
@@ -22,7 +23,7 @@ class review_list
 public:
        const int& get_year();
        const int& get_yday();
-       void insert_review_list(review_history new_history);
+       void insert_review_history(review_history new_history);
        review_list(int _year, int _yday);
 };
 
