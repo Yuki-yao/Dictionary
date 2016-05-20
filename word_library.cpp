@@ -3,32 +3,81 @@
 #include<string>
 #include<map>
 #include<set>
+#include<iostream>
+#include<fstream>
 using namespace std;
 
 word_library word_lib;
 
 void word_library::insert_word(word new_word)
 {
-        int position = -1;
-        for(int i = 0; i < words.size(); i ++)
+        vector<word>::reverse_iterator rit;
+        for(rit = words.rbegin(); rit != words.rend(); rit ++)
         {
-                if(new_word.get_word_name() == words[i].get_word_name())
-                {
-                        position = i;
-                        break;
-                }
+                if(new_word.get_word_name() == rit->get_word_name()) break;
         }
-        if(position >= 0)
-                words[position].insert_features(new_word.get_feature(0));
+        if(rit != words.rend())
+                rit->insert_features(new_word.get_feature(0));
         else
         {
                 words.push_back(new_word);
-                wordmap[new_word.get_word_name()] = &new_word;
+                wordmap.insert(pair<string, word&>(new_word.get_word_name(), words.back()));
                 newwords.insert(new_word.get_word_name());
         }
 }
 
-word::word(string _word_name):word_name(_word_name){}
+word_library::word_library()
+{
+        ifstream fin;
+        fin.open("dic_file\\word_file");
+        if(!fin)
+        {
+                cout << "Open error!" << endl;
+                return;
+        }
+
+        string _word_name, _pos, _meaning;
+        while(fin >> _word_name)
+        {
+                word new_word(_word_name);
+                fin >> _pos >> _meaning;
+                feature new_feature(_pos, _meaning);
+                new_word.insert_features(new_feature);
+                insert_word(new_word);
+        }
+
+        fin.close();
+
+        fin.open("dic_file\\word_frequency");
+        if(!fin)
+        {
+                cout << "Open error!" << endl;
+                return;
+        }
+        vector<string> f_words;
+        string f_word;
+        while(fin >>f_word)
+        {
+                f_words.push_back(f_word);
+        }
+        fin.close();
+
+        int num = f_words.size() / 5;
+        vector<string>::iterator vit = f_words.begin();
+        for(int i = 1; i <= 5; i ++)
+                for(int j = 0 ; j < num; vit ++)
+                {
+                        map<string, word&>::iterator mit;
+                        mit = wordmap.find(*vit);
+                        if(mit != wordmap.end())
+                                mit->second.change_level(i);
+                }
+
+}
+
+word::word(string _word_name):word_name(_word_name), level(3){}
+
+void word::change_level(int n){level = n;}
 
 void word::insert_features(feature new_feature)
 {
@@ -50,7 +99,7 @@ const feature& word::get_feature(int i)
         return features[i];
 }
 
-feature::feature(string _pos, string _meaning): pos(_pos), meaning(_meaning){}
+feature::feature(string _pos, string _meaning): pos(_pos), meaning(_meaning), level(3){}
 
 void feature::insert_examples(string example)
 {

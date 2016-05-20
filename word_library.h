@@ -25,8 +25,10 @@ public:
         const string& get_word_name();
         const vector<feature>& get_features();
         const feature& get_feature(int i);//get the i-th feature in the features
+        void change_level(int n);
 private:
         string word_name;
+        int level;
         vector<feature> features;
 };
 
@@ -34,9 +36,10 @@ class word_library
 {
 public:
         void insert_word(word new_word);
+        word_library();
 private:
         vector<word> words;
-        map<string, word*> wordmap;
+        map<string, word&> wordmap;
         set<string> newwords;
 friend class review_history_library;
 };
