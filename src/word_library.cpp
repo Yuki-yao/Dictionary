@@ -52,7 +52,7 @@ word_library::word_library()
         }
         fin.close();
 
-        fin.open("..data/word_frequency");
+        fin.open("../data/word_frequency");
         if(!fin)
         {
                 cout << "Open error!" << endl;
