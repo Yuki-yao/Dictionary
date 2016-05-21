@@ -14,7 +14,7 @@ void word_library::insert_word(word new_word)
         vector<word>::reverse_iterator rit;
         for(rit = words.rbegin(); rit != words.rend(); rit ++)
         {
-                if(new_word.get_word_name() == rit->get_word_name()) break;
+		if(new_word.get_word_name() == rit->get_word_name()) break;
         }
         if(rit != words.rend())
                 rit->insert_features(new_word.get_feature(0));
@@ -36,19 +36,23 @@ word_library::word_library()
                 return;
         }
 
-        string _word_name, _pos, _meaning;
-        while(fin >> _word_name)
+        string _word_name, _pos, _meaning, tmp;
+        while(!getline(fin, _word_name).fail())
         {
+        	if(_word_name == "") break;
+
                 word new_word(_word_name);
-                fin >> _pos >> _meaning;
+                getline(fin, _pos);
+                getline(fin, _meaning);
                 feature new_feature(_pos, _meaning);
                 new_word.insert_features(new_feature);
                 insert_word(new_word);
-        }
 
+                if(getline(fin, tmp).fail()) break;
+        }
         fin.close();
 
-        fin.open("");
+        fin.open("..data/word_frequency");
         if(!fin)
         {
                 cout << "Open error!" << endl;
@@ -56,7 +60,7 @@ word_library::word_library()
         }
         vector<string> f_words;
         string f_word;
-        while(fin >>f_word)
+        while(fin >> f_word)
         {
                 f_words.push_back(f_word);
         }
@@ -65,7 +69,7 @@ word_library::word_library()
         int num = f_words.size() / 5;
         vector<string>::iterator vit = f_words.begin();
         for(int i = 1; i <= 5; i ++)
-                for(int j = 0 ; j < num; vit ++)
+                for(int j = 0 ; j < num; j ++, vit ++)
                 {
                         map<string, word&>::iterator mit;
                         mit = wordmap.find(*vit);
@@ -73,6 +77,16 @@ word_library::word_library()
                                 mit->second.change_level(i);
                 }
 
+}
+
+word_library::iterator word_library::begin()
+{
+        return words.begin();
+}
+
+word_library::iterator word_library::end()
+{
+        return words.end();
 }
 
 word::word(string _word_name):word_name(_word_name), level(3){}
@@ -99,9 +113,29 @@ const feature& word::get_feature(int i)
         return features[i];
 }
 
+word::iterator word::begin()
+{
+	return features.begin();
+}
+
+word::iterator word::end()
+{
+	return features.end();
+}
+
 feature::feature(string _pos, string _meaning): pos(_pos), meaning(_meaning), level(3){}
 
 void feature::insert_examples(string example)
 {
         examples.push_back(example);
+}
+
+const string& feature::get_pos()
+{
+	return pos;
+}
+
+const string& feature::get_meaning()
+{
+	return meaning;
 }
