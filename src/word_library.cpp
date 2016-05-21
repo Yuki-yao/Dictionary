@@ -29,7 +29,7 @@ void word_library::insert_word(word new_word)
 word_library::word_library()
 {
         ifstream fin;
-        fin.open("dic_file\\word_file");
+        fin.open("../data/firststep");
         if(!fin)
         {
                 cout << "Open error!" << endl;
@@ -48,7 +48,7 @@ word_library::word_library()
 
         fin.close();
 
-        fin.open("dic_file\\word_frequency");
+        fin.open("");
         if(!fin)
         {
                 cout << "Open error!" << endl;
