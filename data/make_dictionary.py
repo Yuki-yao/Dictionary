@@ -14,5 +14,6 @@ for i in range(61):
 					s = s.replace('\\n  ', '')
 					s = s.replace('\\\"', '\"')
 					s = s.replace('\\\'', '\'')
+					s = s.replace('\');', '')
 					output.write(s+'\n')	
 				output.write('\n')		

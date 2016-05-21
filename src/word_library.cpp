@@ -29,7 +29,15 @@ void word_library::insert_word(word new_word)
 word_library::word_library()
 {
         ifstream fin;
+        
+        #ifdef __APPLE__
         fin.open("../data/firststep");
+        #endif
+
+        #ifdef _WIN32
+        // ...
+        #endif
+
         if(!fin)
         {
                 cout << "Open error!" << endl;
