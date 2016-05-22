@@ -30,13 +30,13 @@ word_library::word_library()
 {
         ifstream fin;
         
-        #ifdef __APPLE__
+        // #ifdef __APPLE__
         fin.open("../data/firststep");
-        #endif
+        // #endif
 
-        #ifdef _WIN32
-        // ...
-        #endif
+        // #ifdef _WIN32
+        // // ...
+        // #endif
 
         if(!fin)
         {
