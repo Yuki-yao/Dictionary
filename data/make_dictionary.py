@@ -8,11 +8,14 @@ for i in range(61):
 		for j in range(len(v0)):
 			if(j!=0):
 				v1 = v0[j].split('\',\'')
-				for s in v1:
-					s = s.lstrip('\'')
-					s = s.rstrip('\'')
-					s = s.replace('\\n  ', '')
-					s = s.replace('\\\"', '\"')
-					s = s.replace('\\\'', '\'')
-					output.write(s+'\n')	
+				for k in range(len(v1)):
+					if(k <= 2):
+						s = v1[k]
+						s = s.lstrip('\'')
+						s = s.rstrip('\'')
+						s = s.replace('\\n  ', '')
+						s = s.replace('\\\"', '\"')
+						s = s.replace('\\\'', '\'')
+						s = s.replace('\');\n', '')
+						output.write(s+'\n')	
 				output.write('\n')		
