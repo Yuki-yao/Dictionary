@@ -21,6 +21,7 @@ void word_library::insert_word(string& _word_name)
     now->features.push_back(feature());
     getline(fin, pos);
     getline(fin, meaning);
+
     auto p = now->features.end()-1;
     p->load_feature(pos, meaning);
 }
@@ -29,7 +30,7 @@ word_library::word_library()
 {
     _word_name = "";
     fin.open("../data/firststep");
-    
+
     if(!fin)
     {
         cout << "Open error!" << endl;
@@ -64,13 +65,18 @@ word_library::word_library()
 
     int num = f_words.size() / 5;
     vector<string>::iterator vit = f_words.begin();
-    for(int i = 1; i <= 5; i ++)
+    for(int i = 1; i <= 4; i ++)
         for(int j = 0 ; j < num; j ++, vit ++)
         {
             if(word_map.count(*vit) != 0)
                 word_map[*vit]->change_level(i);
         }
-    
+    while(vit != f_words.end())
+	{
+		if(word_map.count(*vit) != 0)
+			word_map[*vit]->change_level(5);
+		vit ++;
+	}
 
 }
 
