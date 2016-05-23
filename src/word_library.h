@@ -55,6 +55,7 @@ public:
 private:
         map<string, word*> word_map;
         set<string> word_set;
+        set<string> newwords;
         string _word_name;
         ifstream fin;
 friend class review_history_library;
