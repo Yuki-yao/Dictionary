@@ -5,6 +5,7 @@
 #include<map>
 #include<set>
 #include<fstream>
+// #include "search_strategy.h"
 using namespace std;
 
 class feature
@@ -26,6 +27,7 @@ class word
 public:
 	typedef vector<feature>::iterator iterator;
         word(string _word_name);
+        word();
         void insert_features(feature new_feature);
         const string& get_word_name();
         const vector<feature>& get_features();
@@ -34,6 +36,7 @@ public:
         iterator begin();
         iterator end();
         int get_level();
+        int features_count();
 private:
         string word_name;
         int level;
