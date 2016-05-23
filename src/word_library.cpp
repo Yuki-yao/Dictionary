@@ -92,6 +92,8 @@ word_library::iterator word_library::end()
 
 word::word(string _word_name):word_name(_word_name), level(3){}
 
+word::word():level(3){}
+
 void word::change_level(int n){level = n;}
 
 void word::insert_features(feature new_feature)
@@ -126,6 +128,10 @@ word::iterator word::end()
 
 int word::get_level(){
     return level;
+}
+
+int word::features_count(){
+    return features.size();
 }
 
 feature::feature(string& _pos, string& _meaning): pos(_pos), meaning(_meaning){}
