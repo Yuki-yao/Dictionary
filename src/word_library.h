@@ -52,12 +52,15 @@ public:
         word_library();
         iterator begin();
         iterator end();
+        void insert_user_word(string&, string&, string&);
+        bool is_new_word(string word);
+        string get_random_new_word();
 private:
         map<string, word*> word_map;
         set<string> word_set;
         set<string> newwords;
-        string _word_name;
         ifstream fin;
+        string _word_name;
 friend class review_history_library;
 };
 

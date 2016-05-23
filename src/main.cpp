@@ -14,6 +14,7 @@ int main()
 	cout << "Loaded.\n";
 	//auto it = word_lib.end()-1;
 	//cout << it->get_word_name() << endl;
+	cout << word_lib.get_random_new_word() << endl;
     string nword;
     cin >> nword;
     while(nword != "xxxxx")

@@ -7,16 +7,34 @@
 #include <fstream>
 #include <algorithm>
 #include <cctype>
+#include<cstdlib>
+#include<ctime>
 using namespace std;
 
 word_library word_lib;
 
 
+bool word_library::is_new_word(string word)
+{
+	if(newwords.find(word) != newwords.end()) return true;
+	else return false;
+}
+
+string word_library::get_random_new_word()
+{
+	srand((unsigned int)(time(NULL)));
+	set<string>::iterator it = newwords.begin();
+	return *it;
+}
+
 void word_library::insert_word(string& _word_name)
 {
+	newwords.insert(_word_name);
     string pos, meaning;
     if(word_map.count(_word_name) == 0)
+	{
         word_map[_word_name] = new word(_word_name);
+	}
     auto now = word_map[_word_name];
     now->features.push_back(feature());
     getline(fin, pos);
@@ -26,9 +44,25 @@ void word_library::insert_word(string& _word_name)
     p->load_feature(pos, meaning);
 }
 
+void word_library::insert_user_word(string& _word_name, string& _pos, string& _meaning)
+{
+	newwords.insert(_word_name);
+    if(word_map.count(_word_name) == 0)
+	{
+		word_map[_word_name] = new word(_word_name);
+	}
+    auto now = word_map[_word_name];
+    now->features.push_back(feature());
+    auto p = now->features.end()-1;
+    p->load_feature(_pos, _meaning);
+
+    ofstream fout;
+    fout.open("../data/worddata");
+}
+
 word_library::word_library()
 {
-    _word_name = "";
+	_word_name = "";
     fin.open("../data/firststep");
 
     if(!fin)
@@ -89,6 +123,7 @@ word_library::iterator word_library::end()
 {
     return word_map.end();
 }
+
 
 word::word(string _word_name):word_name(_word_name), level(3){}
 
