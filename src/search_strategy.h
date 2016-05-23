@@ -6,20 +6,20 @@
 #include <cstring>
 #include <cstdlib>
 #include <vector>
+#include "word_library.h"
 using namespace std;
 
-typedef vector<string> result_list;
-
-class search{
+class search_strategy{
 private:
-	int result_amout;
+	string search_word;
+	word result;
+	int found;
+	void search_in_library(const string&);
 public:
-	search(int){}
-	virtual result_list get_result(string) = 0;
-};
-
-class search_in_history:search{
-
+	search_strategy(const string&);
+	int is_found();
+	int features_count();
+	const feature& get_feature(int i);//get the i-th feature in the features
 };
 
 
