@@ -4,6 +4,7 @@
 #include<vector>
 #include<map>
 #include<set>
+#include<fstream>
 using namespace std;
 
 class feature
@@ -11,13 +12,13 @@ class feature
         string pos;//part of speech
         string meaning;
         vector<string> examples;
-        int level;
 public:
-        feature(string _pos, string _meaning);
+        feature(string& _pos, string& _meaning);
+        feature();
         void insert_examples(string example);
         const string& get_pos();
         const string& get_meaning();
-
+        void load_feature(string&, string&);
 };
 
 class word
@@ -32,24 +33,27 @@ public:
         void change_level(int n);
         iterator begin();
         iterator end();
+        int get_level();
 private:
         string word_name;
         int level;
         vector<feature> features;
+friend class word_library;
 };
 
 class word_library
 {
 public:
-        typedef vector<word>::iterator iterator;
-        void insert_word(word new_word);
+        typedef map<string, word*>::iterator iterator;
+        void insert_word(string&);
         word_library();
         iterator begin();
         iterator end();
 private:
-        vector<word> words;
-        map<string, word&> wordmap;
-        set<string> newwords;
+        map<string, word*> word_map;
+        set<string> word_set;
+        string _word_name;
+        ifstream fin;
 friend class review_history_library;
 };
 
