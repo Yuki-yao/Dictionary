@@ -18,7 +18,7 @@ search_strategy::search_strategy(const string& _search_word):search_word(_search
 		}
 	if(it == word_lib.end()) found = 0;
 	    else found = 1;
-	cout << _search_word << " " << found << endl;    
+	// cout << _search_word << " " << found << endl;    
 }
 
 int search_strategy::is_found(){
