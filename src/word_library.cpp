@@ -1,100 +1,87 @@
-#include<vector>
-#include"word_library.h"
-#include<string>
-#include<map>
-#include<set>
-#include<iostream>
-#include<fstream>
+#include <vector>
+#include "word_library.h"
+#include <string>
+#include <map>
+#include <set>
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <cctype>
 using namespace std;
 
 word_library word_lib;
 
-void word_library::insert_word(word new_word)
+
+void word_library::insert_word(string& _word_name)
 {
-        vector<word>::reverse_iterator rit;
-        for(rit = words.rbegin(); rit != words.rend(); rit ++)
-        {
-		if(new_word.get_word_name() == rit->get_word_name()) break;
-        }
-        if(rit != words.rend())
-                rit->insert_features(new_word.get_feature(0));
-        else
-        {
-                words.push_back(new_word);
-                wordmap.insert(pair<string, word&>(new_word.get_word_name(), words.back()));
-                newwords.insert(new_word.get_word_name());
-        }
+    string pos, meaning;
+    if(word_map.count(_word_name) == 0)
+        word_map[_word_name] = new word(_word_name);
+    auto now = word_map[_word_name];
+    now->features.push_back(feature());
+    getline(fin, pos);
+    getline(fin, meaning);
+    auto p = now->features.end()-1;
+    p->load_feature(pos, meaning);
 }
 
 word_library::word_library()
 {
-        ifstream fin;
-        
-        // #ifdef __APPLE__
-        fin.open("../data/firststep");
-        // #endif
+    _word_name = "";
+    fin.open("../data/firststep");
+    
+    if(!fin)
+    {
+        cout << "Open error!" << endl;
+        return;
+    }
 
-        // #ifdef _WIN32
-        // // ...
-        // #endif
+    string _word_name, tmp;
+    while(!getline(fin, _word_name).fail())
+    {
+    	if(_word_name == "") break;
+        if(_word_name[0] >= 'A' && _word_name[0] <= 'Z')
+            _word_name[0] -= ('A'-'a');
+        insert_word(_word_name);
+        if(getline(fin, tmp).fail()) break;
+    }
+    fin.close();
 
-        if(!fin)
+    fin.open("../data/word_frequency");
+    if(!fin)
+    {
+        cout << "Open error!" << endl;
+        return;
+    }
+    vector<string> f_words;
+    string f_word;
+    while(fin >> f_word)
+    {
+        f_words.push_back(f_word);
+    }
+    fin.close();
+
+
+    int num = f_words.size() / 5;
+    vector<string>::iterator vit = f_words.begin();
+    for(int i = 1; i <= 5; i ++)
+        for(int j = 0 ; j < num; j ++, vit ++)
         {
-                cout << "Open error!" << endl;
-                return;
+            if(word_map.count(*vit) != 0)
+                word_map[*vit]->change_level(i);
         }
-
-        string _word_name, _pos, _meaning, tmp;
-        while(!getline(fin, _word_name).fail())
-        {
-        	if(_word_name == "") break;
-
-                word new_word(_word_name);
-                getline(fin, _pos);
-                getline(fin, _meaning);
-                feature new_feature(_pos, _meaning);
-                new_word.insert_features(new_feature);
-                insert_word(new_word);
-
-                if(getline(fin, tmp).fail()) break;
-        }
-        fin.close();
-
-        fin.open("../data/word_frequency");
-        if(!fin)
-        {
-                cout << "Open error!" << endl;
-                return;
-        }
-        vector<string> f_words;
-        string f_word;
-        while(fin >> f_word)
-        {
-                f_words.push_back(f_word);
-        }
-        fin.close();
-
-        int num = f_words.size() / 5;
-        vector<string>::iterator vit = f_words.begin();
-        for(int i = 1; i <= 5; i ++)
-                for(int j = 0 ; j < num; j ++, vit ++)
-                {
-                        map<string, word&>::iterator mit;
-                        mit = wordmap.find(*vit);
-                        if(mit != wordmap.end())
-                                mit->second.change_level(i);
-                }
+    
 
 }
 
 word_library::iterator word_library::begin()
 {
-        return words.begin();
+    return word_map.begin();
 }
 
 word_library::iterator word_library::end()
 {
-        return words.end();
+    return word_map.end();
 }
 
 word::word(string _word_name):word_name(_word_name), level(3){}
@@ -103,22 +90,22 @@ void word::change_level(int n){level = n;}
 
 void word::insert_features(feature new_feature)
 {
-        features.push_back(new_feature);
+    features.push_back(new_feature);
 }
 
 const string& word::get_word_name()
 {
-        return word_name;
+    return word_name;
 }
 
 const vector<feature>& word::get_features()
 {
-        return features;
+    return features;
 }
 
 const feature& word::get_feature(int i)
 {
-        return features[i];
+    return features[i];
 }
 
 word::iterator word::begin()
@@ -131,11 +118,22 @@ word::iterator word::end()
 	return features.end();
 }
 
-feature::feature(string _pos, string _meaning): pos(_pos), meaning(_meaning), level(3){}
+int word::get_level(){
+    return level;
+}
+
+feature::feature(string& _pos, string& _meaning): pos(_pos), meaning(_meaning){}
+
+feature::feature(){}
+
+void feature::load_feature(string& _pos, string& _meaning){
+    pos = _pos;
+    meaning = _meaning;
+}
 
 void feature::insert_examples(string example)
 {
-        examples.push_back(example);
+    examples.push_back(example);
 }
 
 const string& feature::get_pos()
