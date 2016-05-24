@@ -30,7 +30,7 @@ review_strategy::~review_strategy(){
 	fout.open("../res/review.dat");
 	fout << list.size() << " " << it << endl;
 	for(auto& i : list){
-		fout << i.first << " " << i.second << endl;
+		fout << i.first << endl;
 	}
 }
 

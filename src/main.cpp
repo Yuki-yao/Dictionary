@@ -15,7 +15,7 @@ review_strategy today_review;
 int main()
 {
 	cout << "Loaded.\n";
-	for(int i = 0;i<10;i++){
+	while(1){
 	    cout << today_review.get_next_word() << endl << "Do you know this word?" << endl;
 	    int j;
 	    cin >> j;
