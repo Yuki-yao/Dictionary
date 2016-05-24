@@ -22,6 +22,7 @@ void file_translation::run(){
 			printf("%s\n", pch);
 		    search_strategy new_search((string(pch)));
 		    if(!new_search.is_found()) continue;
+		    if(!new_search.is_new_word()) continue;
 		    fout << string(pch) << endl;
 		    int cnt = new_search.features_count();
             for(int i = 0;i<cnt;i++){

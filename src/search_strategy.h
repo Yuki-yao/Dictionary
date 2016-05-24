@@ -19,6 +19,7 @@ public:
 	search_strategy(const string&);
 	int is_found();
 	int features_count();
+	int is_new_word();
 	const feature& get_feature(int i);//get the i-th feature in the features
 };
 

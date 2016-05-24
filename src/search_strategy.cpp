@@ -33,3 +33,7 @@ int search_strategy::features_count(){
 const feature& search_strategy::get_feature(int i){
 	return result.get_feature(i);
 }
+
+int search_strategy::is_new_word(){
+	return word_lib.is_new_word(result.get_word_name());
+}
