@@ -37,3 +37,7 @@ const feature& search_strategy::get_feature(int i){
 int search_strategy::is_new_word(){
 	return word_lib.is_new_word(result.get_word_name());
 }
+
+int search_strategy::get_level(){
+	return result.get_level();
+}

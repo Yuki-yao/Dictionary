@@ -21,8 +21,10 @@ int main()
 		search_strategy new_search(nword);
         cout << new_search.is_found() << " " << new_search.features_count() << endl;
         int cnt = new_search.features_count();
+        cout << "The level is " << new_search.get_level() << endl;
         for(int i = 0;i<cnt;i++){
             feature now_feature = new_search.get_feature(i);
+            
             cout << now_feature.get_pos() << endl << now_feature.get_meaning() << endl;
         }
         cin >> nword;

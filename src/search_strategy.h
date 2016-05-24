@@ -21,6 +21,7 @@ public:
 	int features_count();
 	int is_new_word();
 	const feature& get_feature(int i);//get the i-th feature in the features
+	int get_level();
 };
 
 
