@@ -17,12 +17,13 @@ review_strategy::review_strategy(){
 			string str;
 			int score;
 			fin >> str >> score;
+			if(score >= 5) continue;
 			list.push_back(make_pair(str, score));
 			word_to_review.insert(str);
 			cout << str << " " << score << endl;
 		}
 	}
-	// get_today_list();
+	get_today_list();
 }
 
 review_strategy::~review_strategy(){
@@ -34,19 +35,21 @@ review_strategy::~review_strategy(){
 	}
 }
 
-// void review_strategy::get_today_list(){
-// 	int p[10];
-// 	p[0] = 1;
-// 	for(int i = 1;i<10;i++) p[i] = p[i-1] << 1;
-// 	for(int i = 1;i<10;i++){
-// 		vector<string> now = review_history_lib.get_list(p[i]);
-// 		for(auto j : now)
-// 			list.push_back(make_pair((*j), 5));
-// 	}	
-// 	while(list.size() < max_list_len){
-// 		word new_word = word_lib.get_random_new_word();
-// 	}
-// }
+void review_strategy::get_today_list(){
+	// int p[10];
+	// p[0] = 1;
+	// for(int i = 1;i<10;i++) p[i] = p[i-1] << 1;
+	// for(int i = 1;i<10;i++){
+	// 	vector<string> now = review_history_lib.get_list(p[i]);
+	// 	for(auto j : now)
+	// 		list.push_back(make_pair((*j), 5));
+	// }	
+	while(list.size() < max_list_len){
+		// cout << "_____" << endl;
+		string new_word = word_lib.get_random_new_word();//haven't pan chong
+		list.push_back(make_pair(new_word, 0));
+	}
+}
 
 string review_strategy::get_next_word(){
 	return list[it].first;

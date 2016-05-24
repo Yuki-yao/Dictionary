@@ -22,8 +22,10 @@ bool word_library::is_new_word(string word)
 
 string word_library::get_random_new_word()
 {
-	srand((unsigned int)(time(NULL)));
+    int t = rand() % newwords.size();
 	set<string>::iterator it = newwords.begin();
+    for(int i = 0;i<t;i++)
+        it++;
 	return *it;
 }
 
@@ -63,6 +65,7 @@ void word_library::insert_user_word(string& _word_name, string& _pos, string& _m
 word_library::word_library()
 {
 	_word_name = "";
+    srand((unsigned int)(time(NULL)));
     fin.open("../data/firststep");
 
     if(!fin)

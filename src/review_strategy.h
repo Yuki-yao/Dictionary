@@ -14,7 +14,7 @@ private:
 public:
 	review_strategy();
 	~review_strategy();
-	// void get_today_list();
+	void get_today_list();
 	string get_next_word();
 	void input_performance(int);
 	int all_correct();
