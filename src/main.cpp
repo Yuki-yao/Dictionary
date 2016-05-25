@@ -5,37 +5,29 @@
 #include "search_history_library.h"
 #include "review_history_library.h"
 #include "search_strategy.h"
+#include "file_translation.h"
+#include "review_strategy.h"
 
 using namespace std;
 extern word_library word_lib;
 
+
 int main()
 {
+	review_strategy today_review;
 	cout << "Loaded.\n";
-	//auto it = word_lib.end()-1;
-	//cout << it->get_word_name() << endl;
-    string nword;
-    cin >> nword;
-    while(nword != "xxxxx")
-	{
-		search_strategy new_search(nword);
-        cout << new_search.is_found() << " " << new_search.features_count() << endl;
-        int cnt = new_search.features_count();
-        cout << "The level is " << new_search.get_level() << endl;
-        for(int i = 0;i<cnt;i++){
-            cout << "The " << i << "-th meaning is " << endl;
-            feature now_feature = new_search.get_feature(i);
-            cout << now_feature.get_pos() << endl << now_feature.get_meaning() << endl;
-            int cnt1 = now_feature.examples_count();
-            for(int j = 0;j<cnt1;j++)
-                cout << now_feature.get_example(j) << endl;
-        }
-        int i;
-        string str;
-        cin >> i >> str;
-        new_search.insert_examples(i, str);
-        cin >> nword;
+	while(1){
+	    cout << today_review.get_next_word() << endl << "Do you know this word?" << endl;
+	    string respond;
+        int j;
+        getline(cin, respond);
+        if(respond == "yes") j = 2;
+            else if(respond == "no") j = 0;
+                else if(respond == "quit") goto l1;
+                    else j = 1;
+	    today_review.input_performance(j);
+	    if(today_review.all_correct()) break;
 	}
-    cout << "Hello world!" << endl;
+l1:    cout << "Congratulations" << endl;
     return 0;
 }
