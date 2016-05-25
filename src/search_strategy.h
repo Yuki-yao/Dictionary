@@ -12,7 +12,7 @@ using namespace std;
 class search_strategy{
 private:
 	string search_word;
-	word result;
+	word* result;
 	int found;
 	void search_in_library(const string&);
 public:
@@ -21,6 +21,8 @@ public:
 	int features_count();
 	int is_new_word();
 	const feature& get_feature(int i);//get the i-th feature in the features
+	int get_level();
+	void insert_examples(int, const string&);
 };
 
 
