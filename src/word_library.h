@@ -16,10 +16,12 @@ class feature
 public:
         feature(string& _pos, string& _meaning);
         feature();
-        void insert_examples(string example);
+        void insert_examples(const string& example);
         const string& get_pos();
         const string& get_meaning();
         void load_feature(string&, string&);
+        int examples_count();
+        const string& get_example(int);
 };
 
 class word
@@ -32,6 +34,7 @@ public:
         const string& get_word_name();
         const vector<feature>& get_features();
         const feature& get_feature(int i);//get the i-th feature in the features
+        void insert_examples(int i, const string& example);
         void change_level(int n);
         iterator begin();
         iterator end();

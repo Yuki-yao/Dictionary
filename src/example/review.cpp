@@ -18,16 +18,11 @@ int main()
 	cout << "Loaded.\n";
 	while(1){
 	    cout << today_review.get_next_word() << endl << "Do you know this word?" << endl;
-	    string respond;
-        int j;
-        getline(cin, respond);
-        if(respond == "yes") j = 2;
-            else if(respond == "no") j = 0;
-                else if(respond == "quit") goto l1;
-                    else j = 1;
+	    int j;
+	    cin >> j;
 	    today_review.input_performance(j);
 	    if(today_review.all_correct()) break;
 	}
-l1:    cout << "Congratulations" << endl;
+    cout << "Congratulations" << endl;
     return 0;
 }

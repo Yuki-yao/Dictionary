@@ -22,8 +22,10 @@ bool word_library::is_new_word(string word)
 
 string word_library::get_random_new_word()
 {
-	srand((unsigned int)(time(NULL)));
+    int t = rand() % newwords.size();
 	set<string>::iterator it = newwords.begin();
+    for(int i = 0;i<t;i++)
+        it++;
 	return *it;
 }
 
@@ -63,6 +65,7 @@ void word_library::insert_user_word(string& _word_name, string& _pos, string& _m
 word_library::word_library()
 {
 	_word_name = "";
+    srand((unsigned int)(time(NULL)));
     fin.open("../data/firststep");
 
     if(!fin)
@@ -178,7 +181,7 @@ void feature::load_feature(string& _pos, string& _meaning){
     meaning = _meaning;
 }
 
-void feature::insert_examples(string example)
+void feature::insert_examples(const string& example)
 {
     examples.push_back(example);
 }
@@ -191,4 +194,16 @@ const string& feature::get_pos()
 const string& feature::get_meaning()
 {
 	return meaning;
+}
+
+void word::insert_examples(int i, const string& example){
+    features[i].insert_examples(example);
+}
+
+int feature::examples_count(){
+    return examples.size();
+}
+
+const string& feature::get_example(int i){
+    return examples[i];
 }
