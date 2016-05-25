@@ -12,7 +12,7 @@ search_strategy::search_strategy(const string& _search_word):search_word(_search
 		{
 			if((*it).second->get_word_name() == search_word)
 			{
-				result = *((*it).second);
+				result = ((*it).second);
 				break;
 			}
 		}
@@ -27,17 +27,21 @@ int search_strategy::is_found(){
 
 int search_strategy::features_count(){
 	if(!found) return -1;
-	return result.features_count();
+	return result->features_count();
 }
 
 const feature& search_strategy::get_feature(int i){
-	return result.get_feature(i);
+	return result->get_feature(i);
 }
 
 int search_strategy::is_new_word(){
-	return word_lib.is_new_word(result.get_word_name());
+	return word_lib.is_new_word(result->get_word_name());
 }
 
 int search_strategy::get_level(){
-	return result.get_level();
+	return result->get_level();
+}
+
+void search_strategy::insert_examples(int i, const string& example){
+	result->insert_examples(i, example);
 }

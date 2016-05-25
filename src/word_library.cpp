@@ -181,7 +181,7 @@ void feature::load_feature(string& _pos, string& _meaning){
     meaning = _meaning;
 }
 
-void feature::insert_examples(string example)
+void feature::insert_examples(const string& example)
 {
     examples.push_back(example);
 }
@@ -194,4 +194,16 @@ const string& feature::get_pos()
 const string& feature::get_meaning()
 {
 	return meaning;
+}
+
+void word::insert_examples(int i, const string& example){
+    features[i].insert_examples(example);
+}
+
+int feature::examples_count(){
+    return examples.size();
+}
+
+const string& feature::get_example(int i){
+    return examples[i];
 }
