@@ -7,6 +7,7 @@
 #include "search_strategy.h"
 #include "file_translation.h"
 #include "review_strategy.h"
+#include "test_strategy.h"
 
 using namespace std;
 extern word_library word_lib;
